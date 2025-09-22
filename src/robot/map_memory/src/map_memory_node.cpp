@@ -11,10 +11,10 @@ MapMemoryNode::MapMemoryNode() : Node("map_memory"), map_memory_(robot::MapMemor
     map_pub_ = this->create_publisher<nav_msgs::msg::OccupancyGrid>("/map", 10);
     timer_ = this->create_wall_timer(std::chrono::seconds(1),std::bind(&MapMemoryNode::updateMap, this));
     global_map_.info.resolution = 0.1; 
-    global_map_.info.width = 100;     
-    global_map_.info.height = 100;    
-    global_map_.info.origin.position.x = -5;
-    global_map_.info.origin.position.y = -5;
+    global_map_.info.width = 500;     
+    global_map_.info.height = 500;    
+    global_map_.info.origin.position.x = -(global_map_.info.width * global_map_.info.resolution) / 2.0;
+    global_map_.info.origin.position.y = -(global_map_.info.height * global_map_.info.resolution) / 2.0;
     global_map_.info.origin.position.z = 0.0;
     global_map_.info.origin.orientation.x = 0.0;
     global_map_.info.origin.orientation.y = 0.0;
