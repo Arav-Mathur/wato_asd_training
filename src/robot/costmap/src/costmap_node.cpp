@@ -28,9 +28,10 @@ void CostmapNode::laserCallback(const sensor_msgs::msg::LaserScan::SharedPtr sca
     {
       int x_grid =  static_cast<int>((range * cos(angle))/resolution);
       int y_grid =  static_cast<int>((range * sin(angle))/resolution);
-      OccupancyMap[y_grid][x_grid] = 100;
-     }
-    
+      if (x_grid >= 0 && x_grid < width && y_grid >= 0 && y_grid < height) {
+        OccupancyMap[y_grid][x_grid] = 100;
+      }
+    } 
   }
   
   int inflation_cells = static_cast<int>(inflation_radius / resolution);
