@@ -5,12 +5,31 @@
 
 #include "control_core.hpp"
 
-class ControlNode : public rclcpp::Node {
-  public:
-    ControlNode();
+class ControlNode : public rclcpp::Node
+{
+public:
+  ControlNode();
+  void ControlNode::controlLoop();
 
-  private:
-    robot::ControlCore control_;
+private:
+  robot::ControlCore control_;
+  // Subscribers and Publishers
+  rclcpp::Subscription<nav_msgs::msg::Path>::SharedPtr path_sub_;
+  rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
+  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_pub_;
+
+  // Timer
+  rclcpp::TimerBase::SharedPtr control_timer_;
+
+  // Data
+  nav_msgs::msg::Path::SharedPtr current_path_;
+  nav_msgs::msg::Odometry::SharedPtr robot_odom_;
+
+  // Parameters
+  double lookahead_distance_;
+  double goal_tolerance_;
+  double linear_speed_;
+  double max_steer_rad;
 };
 
 #endif
